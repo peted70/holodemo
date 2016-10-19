@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using HoloToolkit.Unity;
+using UnityEngine;
 
 public class BenchScript : MonoBehaviour
 {

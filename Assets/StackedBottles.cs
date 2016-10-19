@@ -11,4 +11,13 @@ public class StackedBottles : MonoBehaviour
             child.Reset();
         }
     }
+
+    public void InitPhysics()
+    {
+        var children = GetComponentsInChildren<BottleScript>();
+        foreach (var child in children)
+        {
+            child.Placed();
+        }
+    }
 }

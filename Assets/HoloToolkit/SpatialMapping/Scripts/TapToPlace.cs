@@ -33,7 +33,7 @@ namespace HoloToolkit.Unity
         /// </summary>
         WorldAnchor savedAnchor;
 
-        bool placing = true;
+        bool placing = false;
 
         void Start()
         {
@@ -79,6 +79,9 @@ namespace HoloToolkit.Unity
 
                     Debug.Log(gameObject.name + " : " + "Removing existing world anchor if any.");
 
+                    //P.D. I added this here... clear it further down..
+                    GestureManager.Instance.OverrideFocusedObject = gameObject;
+
                     // Remove existing world anchor when moving an object.
                     DestroyImmediate(gameObject.GetComponent<WorldAnchor>());
 
@@ -92,6 +95,13 @@ namespace HoloToolkit.Unity
                 else
                 {
                     SpatialMappingManager.Instance.DrawVisualMeshes = false;
+
+                    //When here we can init the physics on the bottles..
+                    var stack = GetComponentInChildren<StackedBottles>();
+                    stack.InitPhysics();
+
+                    //P.D. I added this here...
+                    GestureManager.Instance.OverrideFocusedObject = null;
 
                     // Add world anchor when object placement is done.
                     CreateAnchor();
@@ -169,7 +179,8 @@ namespace HoloToolkit.Unity
                     // to how the object is placed.  For example, consider
                     // placing based on the bottom of the object's
                     // collider so it sits properly on surfaces.
-                    this.transform.position = hitInfo.point;
+                    var pivot = headPosition + gazeDirection * (hitInfo.distance - 0.2f);
+                    this.transform.position = Vector3.Lerp(this.transform.position, pivot, 0.2f);
 
                     // Rotate this object to face the user.
                     Quaternion toQuat = Camera.main.transform.localRotation;
