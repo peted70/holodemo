@@ -33,7 +33,7 @@ namespace HoloToolkit.Unity
         /// </summary>
         WorldAnchor savedAnchor;
 
-        bool placing = false;
+        bool placing = true;
 
         void Start()
         {
@@ -151,9 +151,9 @@ namespace HoloToolkit.Unity
 
         void Update()
         {
-                // If the user is in placing mode,
-                // update the placement to match the user's gaze.
-                if (placing)
+            // If the user is in placing mode,
+            // update the placement to match the user's gaze.
+            if (placing)
             {
                 // Do a raycast into the world that will only hit the Spatial Mapping mesh.
                 var headPosition = Camera.main.transform.position;
@@ -175,7 +175,7 @@ namespace HoloToolkit.Unity
                     Quaternion toQuat = Camera.main.transform.localRotation;
                     toQuat.x = 0;
                     toQuat.z = 0;
-                    this.transform.rotation = toQuat;
+                    this.transform.localRotation = toQuat;
                 }
             }
         }
