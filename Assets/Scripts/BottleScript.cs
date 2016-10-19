@@ -21,6 +21,9 @@ public class BottleScript : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _rb.isKinematic = true;
         _rb.detectCollisions = false;
+
+        _position = this.gameObject.transform.localPosition;
+        _rotation = this.gameObject.transform.localRotation;
     }
 
     public void Placed()
